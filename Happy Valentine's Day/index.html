@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    
+    <!-- Combined Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Timmana&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffe4e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .page {
+            display: none; 
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Allow Page 3 to scroll because it has the letter */
+        #page3 {
+            overflow-y: auto;
+            display: none;
+            justify-content: flex-start; /* Align to top for scrolling */
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .active { display: flex; animation: fadeIn 0.8s ease-in; }
+        #page3.active { display: block; } /* Block display for scrolling */
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .container {
+            background: #fff;
+            border: 2px solid #f4b9d6;
+            border-radius: 15px;
+            padding: 20px;
+            width: 85%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            margin: 0 auto; /* Center in scroll view */
+        }
+
+        .cinzel { font-family: "Cinzel", serif; }
+
+        /* --- PAGE 1: PASSCODE --- */
+        .image-gif { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .keypad button {
+            background: #f4b9d6; border: none; border-radius: 5px;
+            padding: 15px; font-size: 15px; color: #fff; cursor: pointer;
+        }
+        .input-container input {
+            width: 90%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;
+            text-align: center; font-size: 16px; margin-bottom: 10px;
+        }
+
+        /* --- PAGE 2: TIMER --- */
+        .timer { display: flex; justify-content: center; gap: 12px; font-weight: bold; font-size: 20px; color: #ad1457; }
+        .timer span { display: block; font-size: 12px; color: #880e4f; }
+
+        /* --- PAGE 3: SLIDER & LETTER --- */
+        .slider-wrapper {
+            background: white;
+            padding: 10px 10px 30px 10px; 
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            border: 1px solid #eee;
+            position: relative;
+            margin: 20px auto;
+            width: 260px;
+        }
+        .image-slider {
+            position: relative;
+            width: 260px;
+            height: 300px;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        .love-image {
+            width: 100%; height: 100%; object-fit: cover; position: absolute;
+            opacity: 0; transition: opacity 1.2s ease-in-out; left: 0; top: 0;
+        }
+        .love-image.visible { opacity: 1; }
+        
+        .floating-heart {
+            position: fixed; color: #ff71fa; opacity: 0.6;
+            animation: float 4s infinite linear; z-index: 1;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        .letter-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #f4b9d6;
+            border-radius: 15px;
+            padding: 20px;
+            width: 85%;
+            max-width: 380px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .text-content { font-size: 15px; color: #d32f2f; line-height: 1.6; }
+
+        /* Buttons */
+        .next-btn {
+            margin-top: 25px; background: #ff71fa; border: none; border-radius: 25px;
+            padding: 12px 30px; font-size: 18px; color: white; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 113, 250, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: PASSCODE -->
+    <div id="page1" class="page active">
+        <div class="container">
+            <h3 class="cinzel">Happy Valentine's Day</h3>
+            <img src="https://happy-valentine-s-day-inky.vercel.app/img-9147.gif" alt="Valentine Image" class="image-gif">
+            <div class="input-container">
+                <input type="password" id="password" placeholder="Enter your password" readonly>
+            </div>
+            <div class="keypad">
+                <button onclick="addToPassword('1')">1</button>
+                <button onclick="addToPassword('2')">2</button>
+                <button onclick="addToPassword('3')">3</button>
+                <button onclick="addToPassword('4')">4</button>
+                <button onclick="addToPassword('5')">5</button>
+                <button onclick="addToPassword('6')">6</button>
+                <button onclick="addToPassword('7')">7</button>
+                <button onclick="addToPassword('8')">8</button>
+                <button onclick="addToPassword('9')">9</button>
+                <button onclick="backspacePassword()">←</button>
+                <button onclick="addToPassword('0')">0</button>
+                <button onclick="submitPassword()">↵</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: TIMER -->
+    <div id="page2" class="page">
+        <div class="container cinzel">
+            <h1 style="font-size: 20px; color: #f06292;">How Long Have We Been Together? ♥</h1>
+            <div id="timeTogether" style="font-size: 18px; color: #d32f2f; margin-bottom: 20px;">0 Years 0 Months</div>
+            <div class="timer">
+                <div><div id="days">0</div><span>Days</span></div>
+                <div><div id="hours">0</div><span>Hrs</span></div>
+                <div><div id="minutes">0</div><span>Mins</span></div>
+                <div><div id="seconds">0</div><span>Secs</span></div>
+            </div>
+            <button class="next-btn" onclick="showPage('page3')">Bora♥Nika</button>
+        </div>
+    </div>
+
+   
+    <div id="page3" class="page">
+        <div class="cinzel" style="color:#e91e63; font-size: 2.8em; margin-bottom: 5px; text-align:center;">
+            Bora ♥ Nika
+        </div>
+        <div class="cinzel" style="font-size: 0.9em; color: #ff71fa; text-align:center; margin-bottom: 10px;">
+            YOU ARE MY FAVORITE PERSON
+        </div>
+
+        
+        <div class="slider-wrapper">
+            <div class="image-slider">
+                 <img src="https://happy-valentine-s-day-inky.vercel.app/p1.jpg" class="love-image visible">
+                <img src="https://happy-valentine-s-day-inky.vercel.app/p2.jpg" class="love-image">
+                <img src="https://happy-valentine-s-day-inky.vercel.app/p66.jpg" class="love-image">
+                <img src="https://happy-valentine-s-day-inky.vercel.app/p5.jpg" class="love-image">
+                <img src="https://happy-valentine-s-day-inky.vercel.app/p77.jpg" class="love-image">
+                 <img src="pic/photo_1_2026-02-14_01-22-05.jpg" class="love-image">
+                <img src="pic/photo_2_2026-02-14_01-22-05.jpg" class="love-image">
+            </div>
+            <div class="cinzel" style="position: absolute; bottom: 8px; width: 100%; text-align: center; color: #888; font-size: 11px;">
+                Our Memories
+            </div>
+        </div>
+
+     
+        <div class="letter-box">
+            <div style="font-size: 20px; color: #f06292; margin-bottom: 10px; text-align: center;" class="cinzel">Happy Valentine's Day</div>
+            <div class="text-content">
+                <p id="years-text" style="font-weight: bold; color: #ad1457; text-align: center;"></p>
+                <p>But I like to argue with you every day. Even though I might talk rough sometimes, I love you the most. There's never a day that I don't love you. You're the first in so many things in my life. I don't think about or want to meet anyone new. If I had the choice, I'd want to be with you forever. I promise I won't leave you. I'll always be by your side. I'll care for you the way you care for me. I'll make you never be ashamed of being with me.</p>
+                <p>I've never thought that being with you was a waste of time or a mistake. I'm so incredibly lucky to have met and be with you. I'll make you as lucky as you make me feel. I won't leave you, and you can't leave me either. Pinky promise!</p>
+            </div>
+            <div style="font-size: 16px; color: #ad1457; margin-top: 15px; text-align: center;" class="cinzel">I Love You Forever</div>
+        </div>
+
+        <audio id="bgMusic" src="https://happy-valentine-s-day-inky.vercel.app/loy.mp3" loop></audio>
+        
+       
+        <div style="height: 50px;"></div>
+    </div>
+
+    <script>
+        // --- NAVIGATION ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            if(pageId === 'page3') {
+                document.getElementById('bgMusic').play().catch(() => {});
+                createHearts();
+                // Allow body to scroll on Page 3
+                document.body.style.overflowY = "auto";
+            } else {
+                document.body.style.overflowY = "hidden";
+            }
+        }
+
+        // --- PASSCODE ---
+        function addToPassword(v) { document.getElementById('password').value += v; }
+        function backspacePassword() { const p = document.getElementById('password'); p.value = p.value.slice(0, -1); }
+        function submitPassword() {
+            if (document.getElementById('password').value === "444455") showPage('page2');
+            else { alert('Incorrect!'); document.getElementById('password').value = ''; }
+        }
+44
+        const start = new Date("2024-05-19T00:00:00");
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - start;
+            document.getElementById("days").textContent = Math.floor(diff / 86400000);
+            document.getElementById("hours").textContent = Math.floor((diff / 3600000) % 24);
+            document.getElementById("minutes").textContent = Math.floor((diff / 60000) % 60);
+            document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
+
+            let y = now.getFullYear() - start.getFullYear();
+            let m = now.getMonth() - start.getMonth();
+            if (m < 0) { y--; m += 12; }
+
+            document.getElementById("timeTogether").textContent = `${y} Years ${m} Months`;
+            document.getElementById("years-text").textContent = `We've been together for ${y} Years and ${m} Months now.`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+       
+        let idx = 0;
+        setInterval(() => {
+            const imgs = document.querySelectorAll('.love-image');
+            if(imgs.length > 0) {
+                imgs[idx].classList.remove('visible');
+                idx = (idx + 1) % imgs.length;
+                imgs[idx].classList.add('visible');
+            }
+        }, 3000);
+
+       
+        function createHearts() {
+            const p3 = document.getElementById('page3');
+            for(let i=0; i<15; i++) {
+                const h = document.createElement('div');
+                h.className = 'floating-heart';
+                h.innerHTML = '❤';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDelay = Math.random() * 5 + 's';
+                h.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                p3.appendChild(h);
+            }
+        }
+    </script>
+</body>
+</html>
